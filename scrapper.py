@@ -36,8 +36,8 @@ submission = reddit.submission(id=postId)
 count = 0
 # iterate through comments - increase the limit if you want it to look through more comments
 # I found that 100 is a good balance between quantity and time it takes to run
-# If the comment thread is too big you might get a 413 error so lower the limit to 0 if that happens
-submission.comments.replace_more(limit=100)
+# If the comment thread is too big you might get a 413 error so lower the limit if that happens
+submission.comments.replace_more(limit=50)
 for comment in submission.comments.list():
   count += 1
   # only count stock symbols once for each comment by creating a new set for each comment
