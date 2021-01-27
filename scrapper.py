@@ -8,21 +8,20 @@ import datetime
 from dotenv import load_dotenv
 load_dotenv()
 
-# uses datetime to create file name for today's csv file (if it exists)
+# uses datetime to create file name for today's csv file
 today_csv = "{0}.csv".format(datetime.datetime.today().strftime('%Y-%m-%d'))
 # check if we already saved stock symbols from an earlier post today
+# reads csv and creates a map (symbol (key) : count (value))
 if path.exists(today_csv):
-  # reads csv and creates a map (symbol (key) : count (value))
   symbols_df = pd.read_csv(today_csv)
   symbols = dict(zip(symbols_df.Symbol, symbols_df.Count))
 else:
-  # reads csv and creates a map (symbol (key) : count (value)) where count is set to 0
   symbols_df = pd.read_csv('symbols.csv', usecols=['Symbol'])
   symbols_df['Count'] = 0
   symbols = dict(zip(symbols_df.Symbol, symbols_df.Count))
 
 # reddit api credentials (I don't want my account to get banned if some rando steals my secret key since the repo's public)
-# instructions on how to create one is here
+# instructions on how to create one is in README
 reddit = praw.Reddit(
   client_id=os.getenv('CLIENT_ID'),
   client_secret=os.getenv('CLIENT_SECRET'),
