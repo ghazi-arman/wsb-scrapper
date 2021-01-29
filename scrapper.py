@@ -30,20 +30,20 @@ reddit = praw.Reddit(
 
 # retrieve post from id (e.g. reddit.com/r/wallstreetbets/comments/l68y04/daily_discussion_thread)
 # l68y04 is the post id from the example above you have to change this yourself for each post
-postId = 'l6ea1b'
+postId = 'l7ept4'
 submission = reddit.submission(id=postId)
 
 count = 0
 # iterate through comments - increase the limit if you want it to look through more comments
 # I found that 100 is a good balance between quantity and time it takes to run
 # If the comment thread is too big you might get a 413 error so lower the limit if that happens
-submission.comments.replace_more(limit=50)
+submission.comments.replace_more(limit=None)
 for comment in submission.comments.list():
   count += 1
   # only count stock symbols once for each comment by creating a new set for each comment
   mentioned_stocks = set()
   # removes any non alpha numerical characters and makes the string all uppercase to match stock symbols
-  comment = re.sub(r"[^a-zA-Z0-9 ]+", "", comment.body).upper()
+  comment = re.sub(r"[^a-zA-Z0-9 ]+", "", comment.body)
   # creates an array of the words from the comment
   words = comment.split(' ')
   for word in words:
